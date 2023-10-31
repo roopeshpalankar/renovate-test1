@@ -14,7 +14,7 @@ resources:
 helmChartInflationGenerator:
 - chartName: loki
   chartRepoUrl: https://grafana.github.io/helm-charts
-  targetRevision: 5.30.0
+  chartVersion: 5.30.0
   releaseName: loki
   releaseNamespace: loki
   # override with these custom values
