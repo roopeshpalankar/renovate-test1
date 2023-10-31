@@ -1,24 +1,35 @@
----
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-namespace: vault
-
-# make sure namespace exists
-resources:
-- namespace.yaml
-
-# custom index.html file
-
-
-#vault helm chart
-helmChartInflationGenerator:
-- chartName: vault
-  chartRepoUrl: https://helm.releases.hashicorp.com
-  chartVersion: 0.22.0
-  releaseName: vault
-  releaseNamespace: vault
-  # override with these custom values
-  values: values.yaml
-
-generatorOptions:
-  disableNameSuffixHash: true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: cao-monitoring
+    name: in-cluster
+  project: train1-dev1
+  sources:
+  - chart: loki
+    helm:
+      releaseName: cao-monitoring
+      valueFiles:
+        - $values/applications/gxfs/train1-dev1/values/values-loki.yaml
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 5.36.0
+  - repoURL: https://gitlab.devops.telekom.de/mcs-paas/cao/customers/gxfs/cao-gxfs-deployment/gitops-gxfs.git
+    targetRevision: HEAD
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        maxDuration: 3m0s
+        factor: 2
+    syncOptions:
+      - ServerSideApply=true
