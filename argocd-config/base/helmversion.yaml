@@ -13,7 +13,7 @@ resources:
 #vault helm chart
 helmChartInflationGenerator:
 - chartName: vault
-  chartRepoUrl: https://helm.releases.hashicorp.com
+  chartRepoUrl: https://grafana.github.io/helm-charts
   chartVersion: 0.21.0
   releaseName: vault
   releaseNamespace: vault
