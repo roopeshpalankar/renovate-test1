@@ -17,7 +17,7 @@ spec:
       valueFiles:
         - $values/applications/gxfs/train1-dev1/values/values-loki.yaml
     repoURL: https://grafana.github.io/helm-charts
-    targetRevision: 5.30.0
+    targetRevision: 5.48.0
   - repoURL: https://gitlab.devops.telekom.de/mcs-paas/cao/customers/gxfs/cao-gxfs-deployment/gitops-gxfs.git
     targetRevision: HEAD
     ref: values
